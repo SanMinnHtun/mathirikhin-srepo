@@ -55,8 +55,18 @@ This repository is set up for a Vercel frontend and a separate Render Node API. 
 
 ### Render API
 
-1. In Render, create a Blueprint from this GitHub repository. Render reads the root `render.yaml`; it configures the service root as `backend`, runs `npm ci && npm run build`, starts with `npm start`, and checks `/healthz`.
-2. Set the prompted variables in Render's service environment:
+1. In Render, choose **New > Web Service**, connect `SanMinnHtun/mathirikhin-srepo`, and select the `main` branch. Choose the **Free** compute plan. Render's Free plan is available for Web Services; it has usage limits and spins down after inactivity. See [Render's free instance details](https://render.com/docs/free).
+2. Configure the service:
+
+   | Setting | Value |
+   | --- | --- |
+   | Runtime | Node |
+   | Root Directory | `backend` |
+   | Build Command | `npm ci && npm run build` |
+   | Start Command | `npm start` |
+   | Health Check Path | `/healthz` |
+
+3. Add these environment variables in the service's **Environment** settings:
 
    | Variable | Value |
    | --- | --- |
@@ -71,7 +81,7 @@ This repository is set up for a Vercel frontend and a separate Render Node API. 
 
    Firebase Admin values are used only to verify Firebase ID tokens. Store them in Render; do not commit them. If the private key is pasted as one line, preserve escaped `\\n` line breaks.
 
-3. After deployment, copy the Render service origin, such as `https://careai-symptom-api.onrender.com`.
+4. After deployment, copy the Render service origin, such as `https://careai-symptom-api.onrender.com`.
 
 ### Vercel frontend
 
