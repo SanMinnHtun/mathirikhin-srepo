@@ -119,3 +119,20 @@ npm run build --prefix frontend
 - The app assigns symptom urgency independently of model output and validates provider output before display.
 - Results are informational guidance, not medical diagnosis or treatment. Seek professional care for urgent or worsening symptoms.
 - Avoid using real patient data during development and deployment testing.
+
+## Python FastAPI symptom analyzer (Render)
+
+This branch also includes the Python analyzer in `app/`. It is a separate FastAPI service from the Node API described above. The current web frontend still uses the Node API; deploying this Python service alone does not switch the frontend to it.
+
+To deploy the Python analyzer on Render, create a **Web Service** for this repository and select branch `thedeployready`. Leave **Root Directory** blank so Render runs from the repository root. Use:
+
+| Setting | Value |
+| --- | --- |
+| Runtime | Python 3 |
+| Build Command | `pip install -r backend/requirements.txt` |
+| Start Command | `uvicorn app.main:app --host 0.0.0.0 --port $PORT` |
+| Health Check Path | `/health` |
+
+Add `GEMINI_API_KEY` in the Render service's Environment settings. Keep the key secret; do not commit it or put it in a `VITE_` variable. The API includes `POST /api/symptoms/analyze` and `POST /api/symptoms/analyze-senior`.
+
+For local Python development, install `backend/requirements.txt`, set `GEMINI_API_KEY` in a root `.env` file (or your shell environment), and run `uvicorn app.main:app --reload`. The root `.env` is ignored by Git.

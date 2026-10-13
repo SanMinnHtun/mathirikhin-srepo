@@ -1,0 +1,1 @@
+"""CareAI FastAPI application package."""
