@@ -58,6 +58,7 @@ The UI MVP and Spark-compatible data path are substantially implemented. Authent
 | Firebase / Firestore / Storage                 | PARTIAL     | Spark-compatible Firestore rules/indexes deployed and emulator-tested; Auth browser verification and Storage rules deployment remain                                             |
 | OpenRouter integration                         | PARTIAL     | optional protected frontend server route can call OpenRouter with server-only config; browser-only/static Spark hosting still falls back to deterministic insight                 |
 | Dashboard and trends                           | PARTIAL     | bounded owner-scoped direct Firestore queries and frontend loading implemented; E2E verification outstanding                                                                    |
+| Symptom checker                                | PARTIAL     | protected questionnaire requires validated OpenRouter output for each analysis and returns errors when AI is unavailable; clinical/privacy review and browser E2E remain                  |
 | Responsive public and authenticated UI         | IMPLEMENTED | Tailwind/Tailwind CSS responsive layouts                                                                                                                                        |
 | Automated tests                                | PARTIAL     | deterministic-score, validation, provider, and Firestore owner-rule suites pass; Storage test exists but its emulator runtime download and broader integration/E2E coverage remain unverified |
 

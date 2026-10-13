@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit --pretty",
     "lint": "eslint .",
-    "test:ai": "npx --yes tsx@4.20.3 --test src/lib/vitals-api-server.test.ts",
+    "test:ai": "npx --yes tsx@4.20.3 --test src/lib/vitals-api-server.test.ts src/lib/symptoms-api-server.test.ts",
     "format": "prettier --write ."
   },
   "dependencies": {

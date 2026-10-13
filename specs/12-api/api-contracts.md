@@ -19,6 +19,17 @@ Firebase Authentication and the modular Firestore SDK provide the active persist
 
 The service never accepts a UID parameter. Firestore rules authorize and validate the resulting requests. The old Functions REST code is inactive reference code and must not be described as deployed.
 
+## Symptom analysis route
+
+- **Route:** `POST /api/symptoms/analyze-senior`
+- **Request:** closed-choice body areas, pain sensations, severity 1–10, duration, gender choice, optional age 1–120, and optional supported response language (`en` or `my`).
+- **Provider context:** only body areas, sensations, severity, and duration are sent to OpenRouter from the server. No identity, gender, or age is sent.
+- **Response:** successful responses contain urgency and matching badge color assigned by server rules; a `selected_answers` recap; validated AI summary, possible explanations, red flags, and structured recommendations; `analysis_source: openrouter`; and `analysis_status: openrouter`.
+- **Provider status:** successful responses identify validated OpenRouter output. Failures return an HTTP error and a safe `analysis_status` identifying missing server configuration, authentication/quota/model/provider errors, invalid provider output, or network timeout/unavailability. The route never returns raw provider error bodies or credentials.
+- **Personalization and language:** the provider is instructed to address every selected answer without inventing symptoms or medical history and to respond in the selected supported language. The interface and recap support English and Burmese. The response-language choice is not identity or profile data.
+- **Provider requirement:** every valid analysis requires a successful validated provider response. Missing configuration, provider failure, timeout, or invalid/unsafe output returns an HTTP error without an analysis result. Chest pain or severity 8+ still requires provider analysis; deterministic urgency and emergency instructions remain authoritative and are merged into successful AI output.
+- **Safety:** output is informational and not clinically reviewed; the model cannot assign urgency. This endpoint is not an authorization boundary.
+
 ## Optional AI route
 
 - **Route:** `POST /api/vitals/analyze`

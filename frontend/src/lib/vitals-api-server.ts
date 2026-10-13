@@ -16,6 +16,7 @@ const CHAT_URL = "https://openrouter.ai/api/v1/chat/completions";
 const CHAT_TIMEOUT_MS = 10_000;
 const CHAT_MAX_MESSAGE_LENGTH = 2_000;
 const CHAT_LANGUAGES = new Set(["en", "my", "zh"]);
+const CHAT_OFF_TOPIC_REPLY = "ask only about health ";
 
 const LIMITS = {
   systolic: { min: 50, max: 300 },
@@ -96,7 +97,6 @@ export async function handleCareAiChat(request: Request, env: unknown): Promise<
   if (!message || message.length > CHAT_MAX_MESSAGE_LENGTH || !CHAT_LANGUAGES.has(language)) {
     return json({ message: "Check the message and selected language." }, 400);
   }
-
   const apiKey = getConfig(env, "OPENROUTER_API_KEY");
   const model = getConfig(env, "OPENROUTER_MODEL");
   if (!apiKey || !model) return json({ reply: chatFallback(language) });
@@ -106,7 +106,7 @@ export async function handleCareAiChat(request: Request, env: unknown): Promise<
     messages: [
       {
         role: "system",
-        content: `You are CareAI, an informational healthcare assistant. Respond strictly in ${languageInstruction}. Be warm, concise, and clear. Do not diagnose, prescribe, or advise medication changes. For possible emergencies, advise contacting local emergency services or a medical professional. Keep the answer under 120 words.`,
+        content: `You are CareAI, an informational healthcare assistant. Respond strictly in ${languageInstruction}. Answer questions about health and healthcare, including symptoms, wellness, nutrition, exercise, mental health, medical care, and health-related terms that do not use the word health. Do not reject a health question just because it lacks a keyword from a fixed list. Brief greetings (such as hello or hi), thanks, and polite acknowledgments are allowed; respond naturally and briefly, and invite the user to ask a health or healthcare question. If the user asks about a topic unrelated to health or healthcare and it is not a greeting or polite acknowledgment, reply exactly: ${JSON.stringify(CHAT_OFF_TOPIC_REPLY)}. Be warm, concise, and clear. Do not diagnose, prescribe, or advise medication changes. For possible emergencies, advise contacting local emergency services or a medical professional. Keep the answer under 120 words.`,
       },
       { role: "user", content: message },
     ],

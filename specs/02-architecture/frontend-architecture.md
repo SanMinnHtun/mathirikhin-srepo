@@ -14,6 +14,8 @@
 - `src/lib/profile-context.tsx`: direct Firestore-backed profile state.
 - `src/lib/vitals.ts`: deterministic score/status/range insight; `vitals-store.ts`: immutable submission adapter.
 - `src/hooks/use-vitals.ts`: React Query dashboard/history/detail hooks.
+- `src/routes/symptoms.tsx` and `src/components/SeniorSymptomChecker.tsx`: protected symptom questionnaire and accessible result dialog.
+- `src/lib/symptoms-api-server.ts`: same-origin request validation, required server-only OpenRouter call for valid requests, output validation, and deterministic urgency/emergency guidance.
 
 `__root.tsx` supplies React Query, `AuthProvider`, `ProfileProvider`, and the toast host. `ProtectedRoute` gates authenticated/profile-complete app pages and wraps them in `AppShell`.
 

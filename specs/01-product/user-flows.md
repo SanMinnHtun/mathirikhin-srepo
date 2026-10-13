@@ -60,6 +60,21 @@ flowchart LR
 
 The direct Firestore implementation supports All, 7 Days, and 30 Days filters plus cursor pages of 20 owner-scoped readings.
 
+## Symptom-check flow
+
+```mermaid
+flowchart TD
+  A[Authenticated app] --> S[/symptoms]
+  S --> Q[Complete symptom questionnaire]
+  Q --> API[Same-origin server validation]
+  API -->|Provider available| AI[Validated informational OpenRouter content]
+  API -->|Emergency/provider unavailable| G[Deterministic safe guidance]
+  AI --> R[Urgency, summary, red flags, actions, disclaimer]
+  G --> R
+```
+
+Questionnaire answers remain on the page while the result dialog is open and when the user returns to edit. Only body areas, sensations, severity, and duration may be sent to OpenRouter; urgency remains server-controlled.
+
 ## Logout flow
 
 Firebase `signOut()` clears the session and React Query cache before protected routing returns to `/login`. Legacy local profile/vital keys are removed during the one-time cutover and on logout.

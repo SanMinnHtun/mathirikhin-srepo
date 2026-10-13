@@ -21,6 +21,8 @@ flowchart LR
 
 This architecture remains compatible with the Firebase Spark plan because it does not deploy Firebase Cloud Functions. The frontend never contains or calls OpenRouter with a secret. Optional OpenRouter analysis requires hosting the frontend with a protected server runtime that owns `OPENROUTER_API_KEY`; otherwise the UI labels its local result as rule-based.
 
+The protected symptom-check page uses a same-origin frontend server route. That route requires OpenRouter with server-only credentials for every valid analysis; when provider settings or output are unavailable, it returns an error without an analysis result, and server-side emergency escalation remains authoritative. Static browser-only hosting does not run this provider route.
+
 ## Inactive backend
 
 `backend/` contains the previously implemented Firebase Functions/Admin/OpenRouter path. It is retained as reference code for a future billing-enabled or separately hosted protected server, is absent from `firebase.json`, and is not called by the active frontend.

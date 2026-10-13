@@ -96,3 +96,12 @@ The active Spark-mode Firestore path never sends OpenRouter requests directly fr
 **GIVEN** a visitor loads `/`  
 **WHEN** they view product previews  
 **THEN** only illustrative demo values are rendered and no authenticated local or remote record is read.
+
+## AC-SYMPTOM-001
+
+**Related requirement:** CARE-PROD-011  
+**Status:** IMPLEMENTED IN CODE; PROVIDER / PRIVACY / CLINICAL REVIEW AND E2E OUTSTANDING
+
+**GIVEN** a signed-in user completes the required symptom questionnaire  
+**WHEN** they request a summary  
+**THEN** the app displays urgency, a recap of the selected answers, an overview, warning signs, and expandable next steps with explanations of their relevance, plus the informational disclaimer, without navigating. The questionnaire, provider-generated result, and provider error messages support English and Burmese according to the selected app language. OpenRouter receives only selected body areas, sensations, severity, and duration plus the response-language choice through a same-origin server route and is instructed not to invent symptoms or history. Missing or failed provider configuration yields a clear error and no analysis result. Every displayed analysis comes from validated OpenRouter output; emergency escalation does not depend on the model.

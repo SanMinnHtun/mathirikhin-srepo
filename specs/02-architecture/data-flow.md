@@ -31,6 +31,23 @@ flowchart LR
 
 The idempotency key is the immutable reading document ID. Rules recompute the documented deviation/emergency score result and reject forged scores or out-of-limit readings. No OpenRouter request or analysis document is created in Spark mode.
 
+## Symptom summary
+
+```mermaid
+flowchart LR
+  U[Authenticated questionnaire] --> V[Same-origin server validation]
+  V --> E{Emergency rule}
+  E -->|Urgent| G[Preserve deterministic emergency guidance]
+  E -->|All valid requests| O[Required OpenRouter request]
+  O --> N[Validate bounded output]
+  O -->|Unavailable/invalid| F[Return safe error without analysis]
+  N --> R[Structured AI result]
+  G --> N
+  F --> X[Show provider unavailable error]
+```
+
+The provider receives only selected body areas, pain sensations, severity, and duration. Gender, age, Firebase identity, and profile details are not forwarded. Model output cannot set urgency or badge color.
+
 ## Dashboard/history
 
 The authenticated UID scopes bounded newest-first direct Firestore queries. History filters use `createdAt`, and pagination uses `createdAt` plus document ID. The public landing page remains a separate static-demo flow.

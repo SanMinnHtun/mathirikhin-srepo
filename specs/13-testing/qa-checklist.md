@@ -25,3 +25,4 @@
 - [ ] Firestore/Storage rules deployed and tested
 - [ ] Requested responsive viewport matrix, keyboard, focus, contrast, reduced motion
 - [ ] Loading, empty, permission, network, and AI-error states; no console errors
+- [ ] Symptom questionnaire validation, AI result and provider-error dialog, emergency guidance, disclaimer, keyboard operation, and narrow viewport

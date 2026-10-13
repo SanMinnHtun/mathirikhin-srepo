@@ -95,6 +95,14 @@ The project uses responsive Tailwind classes, labels, focus states, live status,
 
 The landing page’s previews are static demo content and must never load an authenticated user’s health data.
 
+### CARE-PROD-011 — Senior-friendly symptom checker
+
+**Priority:** P1  
+**Status:** IMPLEMENTED IN CODE; PROVIDER / PRIVACY / CLINICAL REVIEW PENDING  
+**Acceptance:** [AC-SYMPTOM-001](./acceptance-criteria.md#ac-symptom-001)
+
+An authenticated user can complete an accessible symptom questionnaire and receive a structured informational summary. Every valid analysis requires a successful OpenRouter response through the protected same-origin server route. Missing provider configuration, provider errors, and invalid or unsafe output return an error and do not present general guidance as AI analysis. Server-side urgency and emergency guidance remain independent of model output. This feature is not a diagnosis or emergency service and is not production-ready pending clinical and privacy review.
+
 ## Non-functional requirements
 
 - Protect identifiers, profile data, vital readings, and AI outputs from other users.

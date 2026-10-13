@@ -12,3 +12,5 @@
 ## Target priorities
 
 Unit-test score boundaries/determinism, vital validation, cursor/date filters, and mapping. Integration-test Firebase auth redirects, Firestore ownership/validation rules, profile writes, vital submission, immutable duplicate prevention, and Spark-mode insight behavior. Component-test errors, loading/empty states, accessible selectors, and charts. End-to-end-test Google auth (test environment), onboarding, dashboard, history, logout, and failure cases. Run manual viewport, keyboard, screen-reader, reduced-motion, and console checks for each release.
+
+The symptom route is covered for validated OpenRouter output, minimal provider context, provider use during emergency escalation, clear errors for missing configuration and provider failures, unsafe-output rejection, and invalid/cross-origin input. Browser accessibility, live-provider behavior, clinical escalation review, privacy review, and E2E checks remain outstanding.
