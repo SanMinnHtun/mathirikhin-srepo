@@ -1,4 +1,4 @@
 {
-  "installCommand": "cd frontend && npm install",
-  "buildCommand": "cd frontend && npm run build && cp -R .vercel/output ../.vercel/output"
+  "installCommand": "cd frontend && npm ci",
+  "buildCommand": "cd frontend && NITRO_PRESET=vercel npm run build"
 }

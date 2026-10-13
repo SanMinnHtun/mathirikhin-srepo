@@ -15,7 +15,7 @@
 - `src/lib/vitals.ts`: deterministic score/status/range insight; `vitals-store.ts`: immutable submission adapter.
 - `src/hooks/use-vitals.ts`: React Query dashboard/history/detail hooks.
 - `src/routes/symptoms.tsx` and `src/components/SeniorSymptomChecker.tsx`: protected symptom questionnaire and accessible result dialog.
-- `src/lib/symptoms-api-server.ts`: same-origin request validation, required server-only OpenRouter call for valid requests, output validation, and deterministic urgency/emergency guidance.
+- `src/lib/symptoms-api-server.ts`: test-only re-export of the backend's shared symptom handler.
 
 `__root.tsx` supplies React Query, `AuthProvider`, `ProfileProvider`, and the toast host. `ProtectedRoute` gates authenticated/profile-complete app pages and wraps them in `AppShell`.
 
@@ -25,4 +25,4 @@ Firebase Auth supplies identity. Profile and vital operations use direct Firesto
 
 ## Boundaries
 
-Components do not construct Firestore paths or accept a caller-selected UID. The service reads the current Firebase user, security rules independently require the same UID, and rules validate every mutable field. OpenRouter and Firebase Admin modules are never imported into browser code. Visual components receive mapped records and clearly label local range-based insights.
+Components do not construct Firestore paths or accept a caller-selected UID. The service reads the current Firebase user, security rules independently require the same UID, and rules validate every mutable field. OpenRouter and Firebase Admin modules are never imported into browser code. The symptom checker sends a Firebase ID token to the Render service at the public `VITE_CAREAI_API_BASE_URL`. Visual components receive mapped records and clearly label local range-based insights.

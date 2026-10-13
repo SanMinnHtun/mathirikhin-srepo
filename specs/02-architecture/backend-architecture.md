@@ -11,9 +11,9 @@ The Spark-plan application has no deployed application backend or Cloud Function
 
 ## Retained reference implementation
 
-`backend/` still contains the prior regional HTTPS API, Firebase Admin validation/persistence, OpenRouter normalization, durable idempotency, and retry implementation. It is not imported or called by the frontend and is not eligible for the selected no-billing deployment. Its tests remain useful reference coverage for a future protected server.
+`backend/` contains two separate server entry points. The prior Firebase Functions API, Firebase Admin persistence, and retry implementation remain inactive reference code. `src/render-server.ts` is a Node/Express web service for the symptom analyzer and can be deployed to Render; it uses the shared handler in `src/symptoms-api-server.ts`, verifies Firebase ID tokens, reads server-only OpenRouter settings, and applies an exact origin allowlist. It does not activate or deploy the Firebase Functions API.
 
-The active frontend server also exposes `POST /api/symptoms/analyze-senior`. It validates questionnaire input, requires OpenRouter through server-only credentials for each valid analysis, assigns urgency independently of model output, and returns an error when provider configuration or output is unavailable. This route is not part of static Firebase Hosting.
+The frontend sends authenticated symptom requests to `VITE_CAREAI_API_BASE_URL`, which defaults to a local Render-service URL for development and is set to the deployed Render origin in Vercel. The same validation and OpenRouter handler is shared with the frontend's test module.
 
 ## Requirement
 

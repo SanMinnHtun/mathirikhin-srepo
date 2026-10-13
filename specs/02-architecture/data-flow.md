@@ -35,7 +35,7 @@ The idempotency key is the immutable reading document ID. Rules recompute the do
 
 ```mermaid
 flowchart LR
-  U[Authenticated questionnaire] --> V[Same-origin server validation]
+  U[Authenticated symptom questionnaire] --> V[Render ID-token and input validation]
   V --> E{Emergency rule}
   E -->|Urgent| G[Preserve deterministic emergency guidance]
   E -->|All valid requests| O[Required OpenRouter request]

@@ -29,8 +29,8 @@
 
 - `frontend/`: TanStack Start/React application and the currently runnable API
   route.
-- `backend/`: planned Firebase Cloud Functions structure. It remains a scaffold
-  and is not wired into the running app.
+- `backend/`: active Render symptom API plus inactive Firebase Cloud Functions
+  reference implementation.
 - `specs/`: authoritative product and engineering requirements.
 
 The current app still uses mock localStorage identity/profile/vital persistence.
@@ -42,6 +42,9 @@ production-ready or treat the mock user as an authorization boundary.
 
 - `POST /api/vitals/analyze` is registered in `frontend/src/server.ts` and
   implemented by `frontend/src/lib/vitals-api-server.ts`.
+- `POST /api/symptoms/analyze-senior` uses the shared handler in
+  `backend/src/symptoms-api-server.ts` and is served by the standalone Render
+  server in `backend/src/render-server.ts`. The client sends a Firebase ID token.
 - OpenRouter calls must remain server-only. Never import the server AI module
   from a browser component or put `OPENROUTER_API_KEY` in `VITE_*`, source,
   logs, tests, screenshots, specs, or commits.
@@ -62,6 +65,9 @@ production-ready or treat the mock user as an authorization boundary.
   In-memory idempotency only covers a warm server instance. Durable deduplication,
   authenticated writes, separate analysis documents, and retry jobs still
   require Firebase implementation.
+- For Render, keep `OPENROUTER_API_KEY` in Render's server environment, use
+  `CAREAI_ALLOWED_ORIGINS` for exact frontend origins, and never put the key in
+  `VITE_*` variables.
 
 ## Commands And Runtime
 

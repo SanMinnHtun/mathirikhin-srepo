@@ -17,7 +17,7 @@
 
 ### TASK-AI-003
 
-**Status:** PARTIAL IN SPARK MODE. OpenRouter remains disabled for browser-only/static Firebase Hosting because that cannot protect its secret. Optional OpenRouter analysis can run through the protected frontend server route when `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`, and `VITE_CAREAI_AI_ANALYSIS_ENABLED=true` are configured; Firestore still stores deterministic readings only. The UI falls back to deterministic range-based insight and an accurate notice. The inactive protected backend remains for a future separately approved persisted server deployment. **Acceptance:** AC-AI-001 partial.
+**Status:** PARTIAL IN SPARK MODE. OpenRouter remains disabled for browser-only/static Firebase Hosting because that cannot protect its secret. Optional vitals analysis can run through the protected frontend server route when `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`, and `VITE_CAREAI_AI_ANALYSIS_ENABLED=true` are configured; Firestore still stores deterministic readings only. The symptom analyzer uses the standalone authenticated Render API and server-only OpenRouter config. The inactive Firebase Functions backend remains separate. **Acceptance:** AC-AI-001 partial.
 
 ## P1 — Important improvements
 

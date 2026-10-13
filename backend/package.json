@@ -2,13 +2,14 @@
   "name": "careai-functions",
   "private": true,
   "type": "module",
-  "description": "Firebase Cloud Functions backend for CareAI.",
+  "description": "CareAI symptom analysis API for Render.",
   "main": "lib/index.js",
   "engines": {
     "node": "22"
   },
   "scripts": {
     "build": "tsc",
+    "start": "node --env-file-if-exists=.env lib/render-server.js",
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test test/*.test.ts",
     "test:rules": "firebase --config ../firebase.json emulators:exec --only firestore,storage \"node --import tsx --test test/rules/*.test.ts\"",

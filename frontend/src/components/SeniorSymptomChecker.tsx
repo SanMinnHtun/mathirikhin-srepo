@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Activity, HeartPulse, Info, LoaderCircle, ShieldAlert } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { getFirebaseAuth } from "@/lib/firebase-client";
 
 const BODY_PARTS = [
   "Head",
@@ -59,6 +60,8 @@ type AnalysisFailureStatus =
   | "invalid_provider_response"
   | "provider_timeout"
   | "provider_unreachable";
+
+const symptomApiBaseUrl = (import.meta.env.VITE_CAREAI_API_BASE_URL ?? "").replace(/\/+$/, "");
 
 function isSymptomResult(value: unknown): value is SymptomResult {
   if (value == null || typeof value !== "object") return false;
@@ -154,9 +157,18 @@ export function SeniorSymptomChecker() {
     setLoading(true);
     setDialogOpen(true);
     try {
-      const response = await fetch("/api/symptoms/analyze-senior", {
+      const user = getFirebaseAuth().currentUser;
+      if (!user) {
+        setError(t("symptomCheck.requestError"));
+        return;
+      }
+      const idToken = await user.getIdToken();
+      const response = await fetch(`${symptomApiBaseUrl}/api/symptoms/analyze-senior`, {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${idToken}`,
+        },
         body: JSON.stringify({
           body_parts: bodyParts,
           pain_sensations: sensations,

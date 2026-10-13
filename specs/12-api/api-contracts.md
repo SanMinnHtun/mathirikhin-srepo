@@ -7,7 +7,7 @@
 
 ## Current state
 
-Firebase Authentication and the modular Firestore SDK provide the active persistence boundary. `VITE_CAREAI_API_BASE_URL` is removed. The only active CareAI REST route is optional presentation-only AI analysis at `POST /api/vitals/analyze`, exposed by the protected frontend server runtime; it is not a Firestore authorization boundary and must not run from browser-only/static hosting with a provider secret.
+Firebase Authentication and the modular Firestore SDK provide the active persistence boundary. Vitals, profile, and history do not use a custom REST API base URL. The symptom checker uses `VITE_CAREAI_API_BASE_URL` to reach the Render Node API. This public URL is not a provider secret.
 
 ## Active data operations
 
@@ -22,13 +22,16 @@ The service never accepts a UID parameter. Firestore rules authorize and validat
 ## Symptom analysis route
 
 - **Route:** `POST /api/symptoms/analyze-senior`
+- **Authentication:** Firebase ID token in `Authorization: Bearer <token>`; the Render server verifies the token before handling the request.
 - **Request:** closed-choice body areas, pain sensations, severity 1–10, duration, gender choice, optional age 1–120, and optional supported response language (`en` or `my`).
 - **Provider context:** only body areas, sensations, severity, and duration are sent to OpenRouter from the server. No identity, gender, or age is sent.
 - **Response:** successful responses contain urgency and matching badge color assigned by server rules; a `selected_answers` recap; validated AI summary, possible explanations, red flags, and structured recommendations; `analysis_source: openrouter`; and `analysis_status: openrouter`.
 - **Provider status:** successful responses identify validated OpenRouter output. Failures return an HTTP error and a safe `analysis_status` identifying missing server configuration, authentication/quota/model/provider errors, invalid provider output, or network timeout/unavailability. The route never returns raw provider error bodies or credentials.
 - **Personalization and language:** the provider is instructed to address every selected answer without inventing symptoms or medical history and to respond in the selected supported language. The interface and recap support English and Burmese. The response-language choice is not identity or profile data.
 - **Provider requirement:** every valid analysis requires a successful validated provider response. Missing configuration, provider failure, timeout, or invalid/unsafe output returns an HTTP error without an analysis result. Chest pain or severity 8+ still requires provider analysis; deterministic urgency and emergency instructions remain authoritative and are merged into successful AI output.
-- **Safety:** output is informational and not clinically reviewed; the model cannot assign urgency. This endpoint is not an authorization boundary.
+- **Authentication:** the Render service verifies the Firebase ID token in the `Authorization: Bearer` header. CORS separately permits only exact origins listed in server-only `CAREAI_ALLOWED_ORIGINS`.
+- **Safety:** output is informational and not clinically reviewed; the model cannot assign urgency. The route does not read or write health records.
+- **Render runtime:** the Node service in `backend/` binds to `0.0.0.0:$PORT`; the frontend sets `VITE_CAREAI_API_BASE_URL` to the public Render origin.
 
 ## Optional AI route
 

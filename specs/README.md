@@ -4,7 +4,7 @@
 **Version:** 1.0  
 **Last Updated:** 2026-08-15
 
-CareAI is a responsive health-vital tracking web application. The active Spark-plan architecture uses Firebase Authentication plus direct, owner-scoped Cloud Firestore access from the frontend. The previous Cloud Functions/OpenRouter backend remains in `backend/` as inactive reference code and is not part of the free-plan deployment. Firestore rules/indexes are deployed to `care-ai-4eb8d`; Google-provider and full browser E2E verification remain outstanding.
+CareAI is a responsive health-vital tracking web application. The active Spark-plan architecture uses Firebase Authentication plus direct, owner-scoped Cloud Firestore access from the frontend. The symptom analyzer uses a separate Node/Express API in `backend/`, deployable to Render; the previous Firebase Cloud Functions implementation remains inactive reference code. Firestore rules/indexes are deployed to `care-ai-4eb8d`; Google-provider and full browser E2E verification remain outstanding.
 
 ## MVP status
 
@@ -56,9 +56,9 @@ The UI MVP and Spark-compatible data path are substantially implemented. Authent
 | Profile onboarding and redirects               | PARTIAL     | direct Firestore implementation complete; provider configuration and E2E verification outstanding                                                                               |
 | Authentication / Google Sign-In                | PARTIAL     | Firebase Auth implementation complete; project/provider verification outstanding                                                                                                |
 | Firebase / Firestore / Storage                 | PARTIAL     | Spark-compatible Firestore rules/indexes deployed and emulator-tested; Auth browser verification and Storage rules deployment remain                                             |
-| OpenRouter integration                         | PARTIAL     | optional protected frontend server route can call OpenRouter with server-only config; browser-only/static Spark hosting still falls back to deterministic insight                 |
+| OpenRouter integration                         | PARTIAL     | symptom analysis uses the authenticated Render Node API; optional vitals/chat routes use the protected frontend server runtime                                                  |
 | Dashboard and trends                           | PARTIAL     | bounded owner-scoped direct Firestore queries and frontend loading implemented; E2E verification outstanding                                                                    |
-| Symptom checker                                | PARTIAL     | protected questionnaire requires validated OpenRouter output for each analysis and returns errors when AI is unavailable; clinical/privacy review and browser E2E remain                  |
+| Symptom checker                                | PARTIAL     | authenticated Render Node API requires validated OpenRouter output for each analysis; clinical/privacy review and browser E2E remain                                             |
 | Responsive public and authenticated UI         | IMPLEMENTED | Tailwind/Tailwind CSS responsive layouts                                                                                                                                        |
 | Automated tests                                | PARTIAL     | deterministic-score, validation, provider, and Firestore owner-rule suites pass; Storage test exists but its emulator runtime download and broader integration/E2E coverage remain unverified |
 
